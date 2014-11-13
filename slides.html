@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
+    <link rel="stylesheet" href="bower_components/reveal.js/css/theme/serif.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>ES6</h1>
+          <h3>making javascript things easier</h3>
+          <p>Eric Ponto | @ericponto</p>
+        </section>
+
+        <section>
+          
+          <section>
+            <h2>Variables</h2>
+            <pre><code>
+var x = 10; // good ol' var
+let y = 10; // block scoped
+const MY_NUMBER = 10; // can't change it
+            </code></pre>
+          </section>
+          
+          <section>
+            <h2>let</h2>
+            <pre><code>
+function test() {
+  var x = 10;
+  if (true) {
+    let x = 15;
+  }
+  console.log(x); // 10
+}
+
+for (let i = 0; i < 100; i++) {}
+console.log(i); // undefined
+            </code></pre>
+          </section>
+          
+          <section>
+            <h2>const</h2>
+            <pre><code>
+const x = 100;
+x = 5; // error
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Desctructing Assignment</h2>
+            <pre><code>
+var stuff = [10, 20];
+var [x, y] = stuff;
+
+console.log(x); // 10
+console.log(y); // 20
+            </code></pre>
+          </section>
+          <section>
+            <h2>Swapping Vars</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+var temp = x;
+x = y;
+y = temp;
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+[x, y] = [y, x];
+              </code></pre>
+            </div>
+          </section>
+          
+          <section>
+            <h2>Objects</h2>
+            <pre><code>
+var a = 5;
+var b = 6;
+var c = {a, b};
+
+console.log(c.a); // 5
+console.log(c.b); // 6
+
+var {x, y} = {x: 10, y: 20};
+
+console.log(x); // 10
+console.log(y); // 20
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Spread Opperator</h2>
+            <pre><code>
+var x = [2, 3, 4];
+var y = [1, ...x, 5] // [1, 2, 3, 4, 5]
+
+var z = [1];
+z.push(...x); // [1, 2, 3, 4]
+            </code></pre>
+          </section>
+          <section>
+            <h2>Bye Bye apply</h2>
+            <pre><code>
+var fn = function(a, b, c) {};
+var x = [1, 2, 3];
+
+// old way
+fn.apply(null, x);
+
+// new way
+fn(...x);
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Paraments, Better arguements</h2>
+            <pre><code>
+function fn() {
+  Array.isArray(arguements); // false
+}
+
+function fn(...args) {
+  Array.isArray(args); // true
+}
+
+function fn(a, b, ...others) {
+  // don't need to try to slice arguements any more
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Parameter Defaults</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+function myFunction(a, b, c) {
+  a = a || "default";
+  b = b || "bye";
+  c = c || "c";
+}
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+function myFunction(a="default", b="bye", c="c") {
+
+}
+              </code></pre>
+            </div>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Array-like to Array</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+var divs = document.querySelectorAll("div");
+divs.forEach(/*...*/) // error
+[].forEach.call(divs, function(){});
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+var divs = document.querySelectorAll("div");
+Array.from(divs).forEach(function() {});
+              </code></pre>
+            </div>
+          </section>
+          <section>
+            <h2>Better for loops</h2>
+            <h3>for...of</h3>
+            <pre><code>
+var x = ["a", "b", "c"];
+for (let n of x) {
+  console.log(n);
+} // "a", "b", "c"
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <h2>Merging/extending objects</h2>
+          <pre><code>
+var x = {a: 1};
+var y = {b: 2};
+
+var o = Object.assign(x, y); // {a: 1, b: 2}
+          </code></pre>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Arrow Function</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+var add = function(x, y) {
+  return x + y
+}
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+var add = (x, y) => x + y;
+              </code></pre>
+            </div>
+          </section>
+          
+          <section>
+            <h2>Scope</h2>
+            <pre><code>
+function Thing() {
+  this.things = [1, 2, 3];
+  /*this.squaredThings = this.things.map(function(x) {
+    return this.square(x);
+  }.bind(this));*/
+  this.squaredThings = this.things.map(x=>this.square(x)); // [1, 4, 9]
+}
+
+Thing.prototype.square = function(n) {
+  return n * n;
+}
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Strings - the back tick</h2>
+            <h3>Multiline and templating</h3>
+            <pre><code>
+var myString = `this is a
+  multiline string
+  that just works`;
+
+// basic templating
+var name = "Eric";
+var greeting = `Hello, ${name}`;
+
+var x = 2;
+var y = `There is ${x * 10} of those`;
+            </code></pre>
+          </section>
+          <section>
+            <h2>Contains</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+"hello".indexOf("lo") > -1; // true
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+"hello".contains("lo"); // true
+              </code></pre>
+            </div>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h2>Classes!</h2>
+            <pre><code>
+class AwesomeThing {
+  constructor(a) {
+    this.a = a;
+  }
+
+  method1() {}
+
+  method2() {}
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>Inheritance</h2>
+            <div class="fragment">
+              <p>The old way</p>
+              <pre><code>
+var Dog = function() {
+  Animal.call(this);
+};
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constuctor = Dog;
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <p>The new way</p>
+              <pre><code>
+class Dog extends Animal {
+  constuctor() {
+    super();
+  }
+}
+              </code></pre>
+            </div>
+          </section>
+        </section>
+        
+        <section>
+          <h2>Other Stuff</h2>
+          <ul>
+            <li>Iterators/Generators</li>
+            <li>Promises</li>
+            <li>Math stuff</li>
+            <li>new types: Map, Set</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>Using ES6 today</h2>
+          <ul>
+            <li>Tracuer</li>
+            <li>6to5</li>
+            <li>EJS</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="http://kangax.github.io/compat-table/es6/">Kangax compatibility tables</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_6_support_in_Mozilla">MDN ES6 support in FF</a></li>
+          </ul>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="bower_components/reveal.js/lib/js/head.min.js"></script>
+    <script src="bower_components/reveal.js/js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
